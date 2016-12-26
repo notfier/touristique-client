@@ -14,11 +14,11 @@ app.use( require( 'webpack-dev-middleware' )( compiler, {
 
 app.use( require( 'webpack-hot-middleware' )( compiler ) );
 
-app.get( '/', function( req, resp ) {
+app.get( '*', function( req, resp ) {
   resp.sendFile( path.join( __dirname, 'index.html' ) );
 });
 
-app.all( '*', proxy( 'localhost:8000', {
+app.all( '/api/*', proxy( 'localhost:8000', {
   forwardPath: function( req, res ) {
     return require( 'url' ).parse( req.url ).path;
   },

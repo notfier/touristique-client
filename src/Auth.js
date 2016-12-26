@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { Link } from 'react-router';
 
-
 // components
+import { OperatorSignIn } from './Components/OperatorSignIn';
 
 
 export class Auth extends Component {
@@ -11,7 +10,7 @@ export class Auth extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      touristCardId: '',
+      touristCardId: ''
     };
   }
 
@@ -39,46 +38,13 @@ export class Auth extends Component {
                     type="button"
                     value="Sign In as a Tourist"
                     className="btn btn-default form-control btn-warning"
-                    onClick={ () => { alert('Not implemented yet!') } }
+                    onClick={ this.signInTourist }
                   ></input>
                 </Link>
               </div>
             </form>
           </div>
-          <div className="col-xs-6">
-            <h3 className="text-center">Operator</h3>
-            <form className="inner-form center-block" autoComplete='off'>
-              <div className="form-group">
-                <input
-                  type='text'
-                  id='cc2'
-                  placeholder='Enter your username(AKA email)'
-                  onChange={ () => { alert('Not implemented yet!') } }
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type='password'
-                  id='cc3'
-                  placeholder='Enter your operator password'
-                  onChange={ () => { alert('Not implemented yet!') } }
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <Link to="/">
-                  <input
-                    id="sign-in"
-                    type="button"
-                    value="Sign In as an Operator"
-                    className="btn btn-default form-control btn-warning"
-                    onClick={ () => { alert('Not implemented yet!') } }
-                  ></input>
-                </Link>
-              </div>
-            </form>
-          </div>
+          <OperatorSignIn/>
         </div>
       </div>
     )
