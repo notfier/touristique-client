@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { TextInput } from './Input';
+
 
 export class TouristCardData extends Component {
 
@@ -77,28 +79,26 @@ export class TouristCardData extends Component {
             </div>
           </div>
           {/* tourist info */}
-          { Object.keys( this.state.tourist ).map( ( el ) => {
-            if ( el !== 'id' && el !== 'date_joined' ) {
-              var label = el.split( '_' ).map( el => ''.concat( ' '.concat( el ) ) );
-              return(
-              <div className='form-group' key={ `tourist-${ el }` }>
-                <label
-                  className='col-md-2 control-label'
-                  htmlFor={`tourist-${ el }`}
-                >{ label }</label>
-                <div className='col-md-8'>
-                  <input
-                    id={`tourist-${ el }`}
-                    type='text'
-                    onChange={ ()=>{} }
-                    className='form-control'
-                    value={ this.state.tourist[el] }
-                  />
-                </div>
-              </div>
-              )
-            }
-          } ) }
+          <TextInput
+            value={ this.props.tourist.first_name }
+            id={ 'first_name' }
+            label={ 'First Name' }
+          />
+          <TextInput
+            value={ this.props.tourist.middle_name }
+            id={ 'middle_name' }
+            label={ 'Middle Name' }
+          />
+          <TextInput
+            value={ this.props.tourist.last_name }
+            id={ 'last_name' }
+            label={ 'Last Name' }
+          />
+          <TextInput
+            value={ this.props.tourist.email }
+            id={ 'email' }
+            label={ 'Email' }
+          />
           { this.state.departments ?
             <div className='form-group'>
               <label

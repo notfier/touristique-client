@@ -48,7 +48,6 @@ export class OperatorSignIn extends Component {
           this.setState({
             error: jsonedResponse.non_field_errors[0],
           });
-          this.props.getAuth( false );
         } else {
           localStorage.setItem('token', jsonedResponse.token)
           this.setState({error: ''});
