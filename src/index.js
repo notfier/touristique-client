@@ -45,7 +45,7 @@ class Index extends Component {
   render() {
     return(
       <Router history={ browserHistory }>
-        <Route path='/' component={ App } onEnter={ this.checkAuth }>
+        <Route path='/' component={ App } onEnter={ this.checkAuth } lol={1}>
           <Route path='auth' component={ Auth }/>
           <Route path='operator' component={ Operator }/>
         </Route>

@@ -17,7 +17,6 @@ export class Auth extends Component {
   render() {
     return (
       <div className="container">
-        <h2 className="text-center">Barca DepSystem</h2>
         <div className="container">
           <div className="col-xs-6">
             <h3 className="text-center">Tourist</h3>
