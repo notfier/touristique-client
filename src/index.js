@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
+import { Provider } from 'react-redux';
+
+import configureStore from './configureStore';
 
 import { App } from './App';
 import { Auth } from './Auth';
@@ -15,6 +18,7 @@ class Index extends Component {
   constructor( props ) {
     super( props );
     this.checkAuth = this.checkAuth.bind( this );
+    this.store = configureStore();
   }
 
   checkAuth( nextState, replace ) {
@@ -44,12 +48,14 @@ class Index extends Component {
 
   render() {
     return(
-      <Router history={ browserHistory }>
-        <Route path='/' component={ App } onEnter={ this.checkAuth } lol={1}>
-          <Route path='auth' component={ Auth }/>
-          <Route path='operator' component={ Operator }/>
-        </Route>
-      </Router>
+      <Provider store={ this.store }>
+        <Router history={ browserHistory }>
+          <Route path='/' component={ App } onEnter={ this.checkAuth } lol={1}>
+            <Route path='auth' component={ Auth }/>
+            <Route path='operator' component={ Operator }/>
+          </Route>
+        </Router>
+      </Provider>
     )
   }
 
