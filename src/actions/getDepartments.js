@@ -1,8 +1,9 @@
+import { SET_INITIAL_DEPARTMENTS } from '../constants/ActionTypes';
 
 
 function requestSetInitialDepartments( deps ) {
   return {
-    type: 'SET_INITIAL_DEPARTMENTS',
+    type: SET_INITIAL_DEPARTMENTS,
     departments: deps
   }
 }

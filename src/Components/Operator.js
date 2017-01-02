@@ -8,32 +8,21 @@ export class Operator extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      touristCardPk: '',
-      touristCardData: null
+      touristCardPk: ''
     };
     this.findTourist = this.findTourist.bind( this );
     this.findAnotherTouristCard = this.findAnotherTouristCard.bind( this );
   }
 
+  componentWillMount() {
+    let token = localStorage.getItem( 'token' );
+    this.props.getDepartments( token );
+  }
+
   findTourist( e ) {
     e.preventDefault();
     let token = localStorage.getItem( 'token' );
-    var url =  '/api/tourists/tourist_card_info/';
-    let paramedUrl = url.concat(`?tourist_card_pk=${ this.state.touristCardPk }`);
-    fetch( paramedUrl, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${ token }`
-      },
-      credentials: 'same-origin'
-    } ).then(
-      response => response.json()
-    ).then(
-      jsonedResponse => this.setState({touristCardData: jsonedResponse})
-    );
-    console.log( 'Tourist data fetched successfully' );
+    this.props.findTourist( token, this.state.touristCardPk );
   }
 
   findAnotherTouristCard() {
@@ -45,7 +34,7 @@ export class Operator extends Component {
   render() {
     return(
       <div className='container'>
-        { this.state.touristCardData ?
+        { this.props.touristCardData ?
           <div className='text-center'>
             <button
               type='button'
@@ -76,9 +65,10 @@ export class Operator extends Component {
             >Find a tourist</button>
           </form>
         }
-        { this.state.touristCardData ?
+        { this.props.touristCardData ?
           <TouristCardData
-            { ...this.state.touristCardData }
+            { ...this.props.touristCardData }
+            departments={ this.props.departments }
           />
         :
           null
@@ -89,4 +79,12 @@ export class Operator extends Component {
 
 };
 
-Operator.PropTypes = {};
+Operator.PropTypes = {
+  departments: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array
+  ]),
+  findTourist: React.PropTypes.func.isRequired,
+  getDepartments: React.PropTypes.func.isRequired,
+  touristCardData: React.PropTypes.object
+};

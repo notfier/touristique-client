@@ -16,28 +16,6 @@ export class TouristCardData extends Component {
     this.changeDep = this.changeDep.bind( this );
   }
 
-  componentWillMount() {
-    let token = localStorage.getItem( 'token' );
-    fetch( '/api/data/departments/', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${ token }`
-      },
-      credentials: 'same-origin'
-    }).then(
-      response => response.json()
-    ).then(
-      jsonedResponse => {
-        console.log(jsonedResponse);
-        this.setState({
-          departments: jsonedResponse
-        })
-      }
-    )
-  }
-
   changeDep( e ) {
     this.setState({
       department: e.target.value
@@ -99,7 +77,7 @@ export class TouristCardData extends Component {
             id={ 'email' }
             label={ 'Email' }
           />
-          { this.state.departments ?
+          { this.props.departments ?
             <div className='form-group'>
               <label
                 className='col-md-2 control-label'
@@ -110,7 +88,7 @@ export class TouristCardData extends Component {
                   onChange={ this.changeDep }
                   className='form-control col-md-8'
                 >
-                  { this.state.departments.map( el => {
+                  { this.props.departments.map( el => {
                     return (
                       <option value={ el.id } key={`key-${ el.id }`}>
                         { el.name }{ el.address }
@@ -139,6 +117,10 @@ TouristCardData.PropTypes = {
   card_id: React.PropTypes.string.isRequired,
   created: React.PropTypes.string.isRequired,
   current_department: React.PropTypes.object.isRequired,
+  departments: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array
+  ]),
   is_active: React.PropTypes.bool.isRequired,
   tourist: React.PropTypes.object.isRequired
 };

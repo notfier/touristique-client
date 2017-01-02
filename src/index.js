@@ -10,7 +10,7 @@ import configureStore from './configureStore';
 
 import { App } from './App';
 import { Auth } from './Auth';
-import { Operator } from './Components/Operator';
+import { OperatorContainer } from './containers/OperatorContainer';
 
 
 class Index extends Component {
@@ -52,7 +52,7 @@ class Index extends Component {
         <Router history={ browserHistory }>
           <Route path='/' component={ App } onEnter={ this.checkAuth } lol={1}>
             <Route path='auth' component={ Auth }/>
-            <Route path='operator' component={ Operator }/>
+            <Route path='operator' component={ OperatorContainer }/>
           </Route>
         </Router>
       </Provider>
