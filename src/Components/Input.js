@@ -20,8 +20,9 @@ export class TextInput extends Component {
   }
 
   render() {
+    console.log('INPUT', this.props.id, this.props.error)
     return(
-      <div className='form-group'>
+      <div className={ this.props.error ? 'form-group has-error' : 'form-group' }>
         <label
           className='col-md-2 control-label'
           htmlFor={`tourist-${ this.props.id }`}
@@ -35,6 +36,11 @@ export class TextInput extends Component {
             value={ this.state.value }
           />
         </div>
+        { this.props.error ?
+          <p className='control-label'>{ this.props.error[0] }</p>
+        :
+          null
+        }
       </div>
     )
   }
@@ -43,6 +49,7 @@ export class TextInput extends Component {
 
 TextInput.PropTypes = {
   changeInternallyTouristInfo: React.PropTypes.func.isRequired,
+  error: React.PropTypes.string,
   id: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   value: React.PropTypes.string

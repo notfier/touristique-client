@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { TouristCardData } from './TouristCardData';
+import { TouristCardDataContainer } from '../containers/TouristCardDataContainer';
 
 
 export class Operator extends Component {
@@ -11,12 +11,11 @@ export class Operator extends Component {
       touristCardPk: ''
     };
     this.findTourist = this.findTourist.bind( this );
-    this.findAnotherTouristCard = this.findAnotherTouristCard.bind( this );
   }
 
   componentWillMount() {
     let token = localStorage.getItem( 'token' );
-    this.props.getDepartments( token );
+    this.props.getDepartments( token );  // get initial departments
   }
 
   findTourist( e ) {
@@ -25,52 +24,52 @@ export class Operator extends Component {
     this.props.findTourist( token, this.state.touristCardPk );
   }
 
-  findAnotherTouristCard() {
-    this.setState({
-      touristCardData: null
-    });
-  }
-
   render() {
     return(
       <div className='container'>
-        { this.props.touristCardData ?
+        { this.props.isTouristCardData ?
           <div className='text-center'>
             <button
               type='button'
               className='btn btn-warning'
-              onClick={ this.findAnotherTouristCard }
+              onClick={ this.props.resetTouristCardData }
             >Find another tourist card</button>
           </div>
         :
-          <form className='form-inline text-center'>
-            <div className='form-group'>
-              <label htmlFor='tourist-card-id'>Tourist card id</label>
-              <input
-                type='text'
-                className='form-control'
-                id='tourist-card-id'
-                placeholder='Enter a tourist card id'
-                onChange={ ( e ) => {
-                  this.setState({
-                    touristCardPk: e.target.value
-                  });
-                } }
-              />
+          <div>
+            <form className='form-inline text-center'>
+              <div className='form-group'>
+                <label htmlFor='tourist-card-id'>Tourist card id</label>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='tourist-card-id'
+                  placeholder='Enter a tourist card id'
+                  onChange={ ( e ) => {
+                    this.setState({
+                      touristCardPk: e.target.value
+                    });
+                  } }
+                />
+              </div>
+              <button
+                type='submit'
+                className='btn btn-danger'
+                onClick={ this.findTourist }
+              >Find a tourist</button>
+            </form>
+            <div className='text-center'>
+              <p>or</p>
+              <button
+                type='submit'
+                className='btn btn-danger'
+                onClick={ ()=>{} }
+              >Add a new tourist</button>
             </div>
-            <button
-              type='submit'
-              className='btn btn-default'
-              onClick={ this.findTourist }
-            >Find a tourist</button>
-          </form>
+          </div>
         }
-        { this.props.touristCardData ?
-          <TouristCardData
-            { ...this.props.touristCardData }
-            changeInternallyTouristInfo={ this.props.changeInternallyTouristInfo }
-            departments={ this.props.departments }
-            saveTouristCardInfo={ this.props.saveTouristCardInfo }
+        { this.props.isTouristCardData ?
+          <TouristCardDataContainer
           />
         :
           null
@@ -82,13 +81,12 @@ export class Operator extends Component {
 };
 
 Operator.PropTypes = {
-  changeInternallyTouristInfo: React.PropTypes.func.isRequired,
   departments: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.array
   ]),
   findTourist: React.PropTypes.func.isRequired,
   getDepartments: React.PropTypes.func.isRequired,
-  saveTouristCardInfo: React.PropTypes.func.isRequired,
-  touristCardData: React.PropTypes.object
+  isTouristCardData: React.PropTypes.bool.isRequired,
+  resetTouristCardData: React.PropTypes.func.isRequired
 };

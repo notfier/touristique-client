@@ -4,26 +4,21 @@ import { bindActionCreators } from 'redux';
 import { Operator } from '../components/Operator';
 import { getDepartments } from '../actions/getDepartments';
 import { findTourist } from '../actions/findTourist';
-import { saveTouristCardInfo } from '../actions/saveTouristCardInfo';
-import { changeInternallyTouristInfo } from '../actions/changeInternallyTouristInfo';
+import { resetTouristCardData } from '../actions/resetTouristCardData';
 
 
 const mapStateToProps = ( state ) => {
   return {
-    departments: state.departments,
-    touristCardData: state.touristCardData
-  }
+    isTouristCardData: state.touristCardData ? true : false
+  };
 };
 
 const mapDispatchToProps = ( dispatch ) => {
   return {
     getDepartments: bindActionCreators( getDepartments, dispatch ),
     findTourist: bindActionCreators( findTourist, dispatch ),
-    saveTouristCardInfo: bindActionCreators( saveTouristCardInfo, dispatch ),
-    changeInternallyTouristInfo: bindActionCreators(
-      changeInternallyTouristInfo, dispatch
-    )
-  }
+    resetTouristCardData: bindActionCreators( resetTouristCardData, dispatch )
+  };
 };
 
 export const OperatorContainer = connect(
