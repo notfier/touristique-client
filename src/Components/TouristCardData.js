@@ -14,6 +14,8 @@ export class TouristCardData extends Component {
       departments: null
     };
     this.changeDep = this.changeDep.bind( this );
+    this.saveTouristCardInfo = this.saveTouristCardInfo.bind( this );
+    this.changeValue = this.changeValue.bind( this );
   }
 
   changeDep( e ) {
@@ -22,28 +24,25 @@ export class TouristCardData extends Component {
     });
   }
 
-  saveTouristCardInfo() {
+  changeValue( fieldName, fieldValue ) {
+    // this method change tourist store state for specific tourist field
+    this.props.changeInternallyTouristInfo(
+      this.props.tourist,
+      fieldName,
+      fieldValue
+    );
+  }
+
+  saveTouristCardInfo( e ) {
     e.preventDefault();
-    fetch( '/api/tourists/tourist_card_info/', {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${ token }`
-      },
-      credentials: 'same-origin',
-      body: {
-        tourist_card_pk: this.props.card_id,
-        department: this.state.department,
-        tourist: this.state.tourist
-      }
-    }).then(
-      response => response.json()
-    ).then(
-      jsonedResponse => {
-        console.log(jsonedResponse);
-      }
-    )
+    console.log('SAVE!', this.state, this.props.tourist);
+    let data = {
+      tourist_card_pk: this.props.card_id,
+      current_department: this.state.department,
+      tourist: this.props.tourist
+    };
+    let token = localStorage.getItem( 'token' );
+    this.props.saveTouristCardInfo( token, data );
   }
 
   render() {
@@ -61,21 +60,33 @@ export class TouristCardData extends Component {
             value={ this.props.tourist.first_name }
             id={ 'first_name' }
             label={ 'First Name' }
+            changeInternallyTouristInfo={ ( name, value ) => {
+              return this.changeValue( name, value );
+            }}
           />
           <TextInput
             value={ this.props.tourist.middle_name }
             id={ 'middle_name' }
             label={ 'Middle Name' }
+            changeInternallyTouristInfo={ ( name, value ) => {
+              return this.changeValue( name, value );
+            }}
           />
           <TextInput
             value={ this.props.tourist.last_name }
             id={ 'last_name' }
             label={ 'Last Name' }
+            changeInternallyTouristInfo={ ( name, value ) => {
+              return this.changeValue( name, value );
+            }}
           />
           <TextInput
             value={ this.props.tourist.email }
             id={ 'email' }
             label={ 'Email' }
+            changeInternallyTouristInfo={ ( name, value ) => {
+              return this.changeValue( name, value );
+            }}
           />
           { this.props.departments ?
             <div className='form-group'>
@@ -115,6 +126,7 @@ export class TouristCardData extends Component {
 
 TouristCardData.PropTypes = {
   card_id: React.PropTypes.string.isRequired,
+  changeInternallyTouristInfo: React.PropTypes.func.isRequired,
   created: React.PropTypes.string.isRequired,
   current_department: React.PropTypes.object.isRequired,
   departments: React.PropTypes.oneOfType([
@@ -122,5 +134,6 @@ TouristCardData.PropTypes = {
     React.PropTypes.array
   ]),
   is_active: React.PropTypes.bool.isRequired,
+  saveTouristCardInfo: React.PropTypes.func.isRequired,
   tourist: React.PropTypes.object.isRequired
 };

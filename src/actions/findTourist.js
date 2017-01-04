@@ -24,10 +24,7 @@ export function findTourist( token, touristCardPk ) {
     } ).then(
       response => response.json()
     ).then(
-      jsonedResponse => {
-        console.log('LOL', jsonedResponse)
-        return dispatch( requestFindTourist( jsonedResponse ) )
-      }
+      jsonedResponse => dispatch( requestFindTourist( jsonedResponse ) )
     );
   }
 };

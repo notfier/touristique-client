@@ -68,7 +68,9 @@ export class Operator extends Component {
         { this.props.touristCardData ?
           <TouristCardData
             { ...this.props.touristCardData }
+            changeInternallyTouristInfo={ this.props.changeInternallyTouristInfo }
             departments={ this.props.departments }
+            saveTouristCardInfo={ this.props.saveTouristCardInfo }
           />
         :
           null
@@ -80,11 +82,13 @@ export class Operator extends Component {
 };
 
 Operator.PropTypes = {
+  changeInternallyTouristInfo: React.PropTypes.func.isRequired,
   departments: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.array
   ]),
   findTourist: React.PropTypes.func.isRequired,
   getDepartments: React.PropTypes.func.isRequired,
+  saveTouristCardInfo: React.PropTypes.func.isRequired,
   touristCardData: React.PropTypes.object
 };

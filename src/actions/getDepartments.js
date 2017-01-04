@@ -21,10 +21,7 @@ export function getDepartments( token ) {
     }).then(
       response => response.json()
     ).then(
-      jsonedResponse => {
-        console.log(jsonedResponse);
-        dispatch( requestSetInitialDepartments( jsonedResponse ) );
-      }
+      jsonedResponse => dispatch( requestSetInitialDepartments( jsonedResponse ) )
     )
   };
 }

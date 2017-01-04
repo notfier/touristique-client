@@ -14,6 +14,8 @@ export class TextInput extends Component {
   changeValue( e ) {
     this.setState({
       value: e.target.value
+    }, () => {
+      this.props.changeInternallyTouristInfo( this.props.id, this.state.value );
     });
   }
 
@@ -40,6 +42,7 @@ export class TextInput extends Component {
 };
 
 TextInput.PropTypes = {
+  changeInternallyTouristInfo: React.PropTypes.func.isRequired,
   id: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   value: React.PropTypes.string
