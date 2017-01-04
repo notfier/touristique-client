@@ -21,4 +21,5 @@ To run tests:
 ```npm test``` (IN PROGRESS)
 
 For extra data and information look at the backend part of Touristique.
+
 Note: It's a proxy client server to check backend API. Use only with Touristique backend.
