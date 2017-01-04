@@ -20,3 +20,11 @@
 .tourist-info {
     margin-top: 50px;
 }
+
+.control-buttons > button {
+    margin-left: 1%;
+}
+
+.login-container {
+    width: 400px;
+}

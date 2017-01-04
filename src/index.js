@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 
 import { App } from './App';
-import { Auth } from './Auth';
+import { OperatorSignIn } from './components/OperatorSignIn';
 import { OperatorContainer } from './containers/OperatorContainer';
 
 
@@ -51,7 +51,7 @@ class Index extends Component {
       <Provider store={ this.store }>
         <Router history={ browserHistory }>
           <Route path='/' component={ App } onEnter={ this.checkAuth } lol={1}>
-            <Route path='auth' component={ Auth }/>
+            <Route path='auth' component={ OperatorSignIn }/>
             <Route path='operator' component={ OperatorContainer }/>
           </Route>
         </Router>

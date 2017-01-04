@@ -3,18 +3,16 @@ import React, { Component } from 'react';
 import { TextInput } from './Input';
 
 
-export class TouristCardData extends Component {
+export class CreateNewTouristCard extends Component {
 
   constructor( props ) {
     super( props );
     this.state = {
-      tourist: this.props.tourist,
-      isActive: this.props.is_active,
-      department: this.props.current_department.id,
-      departments: null
+      tourist: {},
+      department: this.props.departments[0].id,
     };
     this.changeDep = this.changeDep.bind( this );
-    this.saveTouristCardInfo = this.saveTouristCardInfo.bind( this );
+    this.createTouristCard = this.createTouristCard.bind( this );
     this.changeValue = this.changeValue.bind( this );
   }
 
@@ -25,39 +23,38 @@ export class TouristCardData extends Component {
   }
 
   changeValue( fieldName, fieldValue ) {
+    if ( this.props.tourist ) {
+      var tourist = this.props.tourist;
+    } else {
+      var tourist = this.state.tourist;
+    }
     // this method change tourist store state for specific tourist field
     this.props.changeInternallyTouristInfo(
-      this.props.tourist,
+      tourist,
       fieldName,
       fieldValue
     );
   }
 
-  saveTouristCardInfo( e ) {
+  createTouristCard( e ) {
     e.preventDefault();
     let data = {
-      tourist_card_pk: this.props.card_id,
       current_department: this.state.department,
       tourist: this.props.tourist
     };
     let token = localStorage.getItem( 'token' );
-    this.props.saveTouristCardInfo( token, data );
+    this.props.createTouristCard( token, data );
   }
 
   render() {
     let errors = this.props.errors;
+    let tourist = this.props.tourist;
     return(
       <div className='container tourist-info'>
         <form className='form-horizontal text-center'>
-          <div className='form-group'>
-            <label htmlFor='card_id' className='col-md-2 control-label'>Card ID</label>
-            <div className='col-md-8'>
-              <p className='form-control-static'>{ this.props.card_id }</p>
-            </div>
-          </div>
           {/* tourist info */}
           <TextInput
-            value={ this.props.tourist.first_name }
+            value={ tourist ? tourist.first_name : '' }
             id={ 'first_name' }
             label={ 'First Name' }
             changeInternallyTouristInfo={ ( name, value ) => {
@@ -66,7 +63,7 @@ export class TouristCardData extends Component {
             error={ errors && errors.tourist ? errors.tourist.first_name : null }
           />
           <TextInput
-            value={ this.props.tourist.middle_name }
+            value={ tourist ? tourist.middle_name : '' }
             id={ 'middle_name' }
             label={ 'Middle Name' }
             changeInternallyTouristInfo={ ( name, value ) => {
@@ -75,7 +72,7 @@ export class TouristCardData extends Component {
             error={ errors && errors.tourist ? errors.tourist.middle_name : null }
           />
           <TextInput
-            value={ this.props.tourist.last_name }
+            value={ tourist ? tourist.last_name : '' }
             id={ 'last_name' }
             label={ 'Last Name' }
             changeInternallyTouristInfo={ ( name, value ) => {
@@ -84,7 +81,7 @@ export class TouristCardData extends Component {
             error={ errors && errors.tourist ? errors.tourist.last_name : null }
           />
           <TextInput
-            value={ this.props.tourist.email }
+            value={ tourist ? tourist.email : '' }
             id={ 'email' }
             label={ 'Email' }
             changeInternallyTouristInfo={ ( name, value ) => {
@@ -99,7 +96,7 @@ export class TouristCardData extends Component {
               >Department</label>
               <div className='col-md-8'>
                 <select
-                  value={ this.state.department.id }
+                  value={ this.props.departments[0].id }
                   onChange={ this.changeDep }
                   className='form-control col-md-8'
                 >
@@ -119,13 +116,8 @@ export class TouristCardData extends Component {
           <button
             className='btn btn-danger'
             type='submit'
-            onClick={ this.saveTouristCardInfo }
-          >Save tourist card info</button>
-          { this.props.isSavedSuccessfully ?
-            <p style={ {color: '#07c664'} }>Changes were saved successfully!</p>
-          :
-            null
-          }
+            onClick={ this.createTouristCard }
+          >Create new tourist card</button>
         </form>
       </div>
     )
@@ -133,9 +125,8 @@ export class TouristCardData extends Component {
 
 };
 
-TouristCardData.PropTypes = {
+CreateNewTouristCard.PropTypes = {
   errors: React.PropTypes.object,
-  card_id: React.PropTypes.string.isRequired,
   changeInternallyTouristInfo: React.PropTypes.func.isRequired,
   created: React.PropTypes.string.isRequired,
   current_department: React.PropTypes.object.isRequired,
@@ -143,8 +134,7 @@ TouristCardData.PropTypes = {
     React.PropTypes.object,
     React.PropTypes.array
   ]),
-  is_active: React.PropTypes.bool.isRequired,
   isSavedSuccessfully: React.PropTypes.bool,
-  saveTouristCardInfo: React.PropTypes.func.isRequired,
+  createTouristCard: React.PropTypes.func.isRequired,
   tourist: React.PropTypes.object.isRequired
 };

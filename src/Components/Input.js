@@ -20,7 +20,6 @@ export class TextInput extends Component {
   }
 
   render() {
-    console.log('INPUT', this.props.id, this.props.error)
     return(
       <div className={ this.props.error ? 'form-group has-error' : 'form-group' }>
         <label

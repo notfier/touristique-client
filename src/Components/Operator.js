@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import {
+  CreateNewTouristCardContainer
+} from '../containers/CreateNewTouristCardContainer';
 import { TouristCardDataContainer } from '../containers/TouristCardDataContainer';
 
 
@@ -8,9 +11,16 @@ export class Operator extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      touristCardPk: ''
+      touristCardPk: '',
+      error: ''
     };
     this.findTourist = this.findTourist.bind( this );
+  }
+
+  componentWillReceiveProps( newProps ) {
+    if ( !this.props.isTouristCardDataChange && !this.props.isTouristCardCreation ) {
+      this.setState({touristCardPk: ''});
+    }
   }
 
   componentWillMount() {
@@ -20,20 +30,34 @@ export class Operator extends Component {
 
   findTourist( e ) {
     e.preventDefault();
-    let token = localStorage.getItem( 'token' );
-    this.props.findTourist( token, this.state.touristCardPk );
+    if ( !this.state.touristCardPk ) {
+      this.setState({error: 'Enter a card id in the beginning'});
+    } else {
+      this.setState({error: ''});
+      let token = localStorage.getItem( 'token' );
+      this.props.findTourist( token, this.state.touristCardPk );
+    }
   }
 
   render() {
     return(
       <div className='container'>
-        { this.props.isTouristCardData ?
-          <div className='text-center'>
+        { this.props.isTouristCardDataChange || this.props.isTouristCardCreation ?
+          <div className='text-center control-buttons'>
             <button
               type='button'
               className='btn btn-warning'
               onClick={ this.props.resetTouristCardData }
             >Find another tourist card</button>
+            { !this.props.isTouristCardCreation ?
+              <button
+                type='button'
+                className='btn btn-success'
+                onClick={ this.props.turnOnTouristCardCreation }
+              >Create a new tourist card</button>
+            :
+              null
+            }
           </div>
         :
           <div>
@@ -57,20 +81,34 @@ export class Operator extends Component {
                 className='btn btn-danger'
                 onClick={ this.findTourist }
               >Find a tourist</button>
+              { this.state.error ? 
+                <p className='control-label' style={ {color: 'red'} }>
+                  { this.state.error }
+                </p>
+              :
+                null
+              }
             </form>
             <div className='text-center'>
               <p>or</p>
               <button
                 type='submit'
-                className='btn btn-danger'
-                onClick={ ()=>{} }
+                className='btn btn-success'
+                onClick={ () => {
+                  this.setState({error: ''});
+                  this.props.turnOnTouristCardCreation();
+                }}
               >Add a new tourist</button>
             </div>
           </div>
         }
-        { this.props.isTouristCardData ?
-          <TouristCardDataContainer
-          />
+        { this.props.isTouristCardDataChange && !this.props.isTouristCardCreation ?
+          <TouristCardDataContainer/>
+        :
+          null
+        }
+        { this.props.isTouristCardCreation && !this.props.isTouristCardDataChange ?
+          <CreateNewTouristCardContainer/>
         :
           null
         }
@@ -87,6 +125,8 @@ Operator.PropTypes = {
   ]),
   findTourist: React.PropTypes.func.isRequired,
   getDepartments: React.PropTypes.func.isRequired,
-  isTouristCardData: React.PropTypes.bool.isRequired,
-  resetTouristCardData: React.PropTypes.func.isRequired
+  isTouristCardDataChange: React.PropTypes.bool.isRequired,
+  isTouristCardCreation: React.PropTypes.bool.isRequired,
+  resetTouristCardData: React.PropTypes.func.isRequired,
+  turnOnTouristCardCreation: React.PropTypes.func.isRequired
 };

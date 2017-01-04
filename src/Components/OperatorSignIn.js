@@ -62,37 +62,37 @@ export class OperatorSignIn extends Component {
 
   render() {
     return(
-      <div className="col-xs-6">
-        <h3 className="text-center">Operator</h3>
-        <form className="inner-form center-block" autoComplete='off'>
-          <div className="form-group">
+      <div className='container login-container'>
+        <h3 className='text-center'>Operator</h3>
+        <form className='inner-form center-block' autoComplete='off'>
+          <div className='form-group'>
             <input
               type='text'
               id='cc2'
               placeholder='Enter your username(AKA email)'
               onChange={ this.changeUsername }
-              className="form-control"
+              className='form-control'
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <input
               type='password'
               id='cc3'
               placeholder='Enter your operator password'
               onChange={ this.changePassword }
-              className="form-control"
+              className='form-control'
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              id="sign-in"
-              type="button"
-              value="Sign In as an Operator"
-              className="btn btn-default form-control btn-warning"
+              id='sign-in'
+              type='button'
+              value='Sign In as an Operator'
+              className='btn btn-default form-control btn-warning'
               onClick={ this.signInOperator }
             ></input>
           </div>
-          {this.state.error ? <div className="error text-center">{ this.state.error }</div> : null}
+          {this.state.error ? <div className='error text-center'>{ this.state.error }</div> : null}
         </form>
       </div>
     )
