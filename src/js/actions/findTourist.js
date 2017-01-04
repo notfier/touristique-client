@@ -12,7 +12,6 @@ export function findTourist( token, touristCardPk ) {
   return ( dispatch ) => {
     var url =  '/api/tourists/tourist_card_info/';
     let paramedUrl = url.concat(`?tourist_card_pk=${ touristCardPk }`);
-    console.log('GERE', paramedUrl, token);
     return fetch( paramedUrl, {
       method: 'GET',
       headers: {

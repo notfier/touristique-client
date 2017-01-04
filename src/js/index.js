@@ -1,4 +1,4 @@
-var css = require('./styles/main.css');
+var css = require('../styles/main.css');
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
@@ -22,7 +22,6 @@ class Index extends Component {
   }
 
   checkAuth( nextState, replace ) {
-    console.log( nextState.location.pathname )
     if (
       nextState.location.pathname === '/operator/' ||
       nextState.location.pathname === '/auth/'

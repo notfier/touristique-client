@@ -7,7 +7,6 @@ import { changeInternallyTouristInfo } from '../actions/changeInternallyTouristI
 
 
 const mapStateToProps = ( state ) => {
-  console.log(state);
   return {
     errors: state.errors,
     departments: state.departments,
