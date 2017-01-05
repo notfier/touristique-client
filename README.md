@@ -4,6 +4,7 @@ A simple client to test Touristique API backend.
 
 ### How to use?
 
+You can check it on localhost:3000 after both client and backend server running.
 Enter a known tourist card id to edit his info or change department. If you want to create a new tourist simply click Create a new one.
 
 ### Commands
