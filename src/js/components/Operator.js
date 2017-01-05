@@ -18,7 +18,7 @@ export class Operator extends Component {
   }
 
   componentWillReceiveProps( newProps ) {
-    if ( !this.props.isTouristCardDataChange && !this.props.isTouristCardCreation ) {
+    if ( !newProps.isTouristCardDataChange && !newProps.isTouristCardCreation ) {
       this.setState({touristCardPk: ''});
     }
   }

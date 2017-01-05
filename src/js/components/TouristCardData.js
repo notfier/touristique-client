@@ -99,7 +99,7 @@ export class TouristCardData extends Component {
               >Department</label>
               <div className='col-md-8'>
                 <select
-                  value={ this.state.department.id }
+                  value={ this.state.department }
                   onChange={ this.changeDep }
                   className='form-control col-md-8'
                 >

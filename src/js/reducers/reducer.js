@@ -9,8 +9,8 @@ const rootReducer = function( state=initialState, action ) {
   switch( action.type ) {
     case types.CHANGE_INTERNALLY_TOURIST_INFO:
       const touristCardData = Object.assign(
-        { tourist: action.newTouristInfo },
-        state.touristCardData
+        state.touristCardData,
+        { tourist: action.newTouristInfo }
       );
       return Object.assign({}, state, {
         touristCardData: touristCardData

@@ -18,7 +18,7 @@ To run local server:
 
 To run tests:
 
-```npm test``` (IN PROGRESS)
+```npm test```
 
 For extra data and information look at the backend part of Touristique.
 

@@ -92,7 +92,11 @@ export class OperatorSignIn extends Component {
               onClick={ this.signInOperator }
             ></input>
           </div>
-          {this.state.error ? <div className='error text-center'>{ this.state.error }</div> : null}
+          { this.state.error ?
+            <div className='error text-center'>{ this.state.error }</div>
+          :
+            null
+          }
         </form>
       </div>
     )
